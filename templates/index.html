@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Weather & AQI Monitor</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+  <header class="app-header">
+    <h1>🌤️ Weather &amp; AQI Monitor</h1>
+    <p class="subtitle">Live weather + air quality, backed by a MySQL database</p>
+  </header>
+
+  <main class="container">
+
+    <!-- Search bar -->
+    <section class="search-box">
+      <input type="text" id="cityInput" placeholder="Enter city name (e.g. Pune)" />
+      <button id="searchBtn">Search</button>
+    </section>
+
+    <p id="errorMsg" class="error-msg hidden"></p>
+
+    <!-- Current reading cards -->
+    <section id="resultSection" class="result-section hidden">
+      <div class="card weather-card">
+        <h2 id="cityTitle">--</h2>
+        <p class="desc" id="weatherDesc">--</p>
+        <div class="temp-row">
+          <span id="temperature" class="temp">--°C</span>
+          <span id="feelsLike" class="feels-like">Feels like --°C</span>
+        </div>
+        <div class="stats-grid">
+          <div><span class="label">Humidity</span><span id="humidity">--%</span></div>
+          <div><span class="label">Pressure</span><span id="pressure">-- hPa</span></div>
+          <div><span class="label">Wind</span><span id="wind">-- m/s</span></div>
+        </div>
+      </div>
+
+      <div class="card aqi-card">
+        <h2>Air Quality Index</h2>
+        <div class="aqi-badge" id="aqiBadge">--</div>
+        <div class="pollutant-grid" id="pollutantGrid"><!-- filled by JS --></div>
+      </div>
+    </section>
+
+    <!-- History table, pulled from MySQL -->
+    <section class="history-section">
+      <div class="history-header">
+        <h2>History</h2>
+        <select id="citySelect">
+          <option value="">Select a searched city...</option>
+        </select>
+      </div>
+      <table id="historyTable">
+        <thead>
+          <tr>
+            <th>Time</th>
+            <th>Temp (°C)</th>
+            <th>Humidity</th>
+            <th>Condition</th>
+            <th>AQI</th>
+            <th>PM2.5</th>
+            <th>PM10</th>
+          </tr>
+        </thead>
+        <tbody id="historyBody">
+          <tr><td colspan="7" class="empty-row">No data yet — search a city above.</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+  </main>
+
+  <footer>
+    <p>DBMS Mini Project &middot; Flask + MySQL + OpenWeatherMap API</p>
+  </footer>
+
+  <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
